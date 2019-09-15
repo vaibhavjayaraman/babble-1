@@ -92,6 +92,7 @@ const refreshTable = async (): Promise<void> => {
       $( '#baseBox' ).val( entry.base );
       $( '#tagsBox' ).val( entry.tags.join( ',' ) );
 
+      $( '#nameBox' ).removeClass( 'is-invalid' );
       $( '#baseBox' ).removeClass( 'is-invalid' );
       $( '#entryModal' ).modal( 'show' );
     } );
@@ -112,6 +113,7 @@ $( document ).ready( async () => {
     $( '#baseBox' ).val( cryptoutils.babbleDefaultBase );
     $( '#tagsBox' ).val( '' );
 
+    $( '#nameBox' ).removeClass( 'is-invalid' );
     $( '#baseBox' ).removeClass( 'is-invalid' );
     $( '#entryModal' ).modal( 'show' );
   } );
@@ -135,6 +137,10 @@ $( document ).ready( async () => {
     const tagsLen = tags.length;
     for ( let i = 0; i < tagsLen; ++i ) {
       tags[i] = tags[i].trim();
+    }
+    if ( !isValidName( name as string ) ) {
+      $( '#nameBox' ).addClass( 'is-invalid' );
+      return;
     }
     if ( !isValidBase( base as string ) ) {
       $( '#baseBox' ).addClass( 'is-invalid' );
@@ -200,4 +206,9 @@ const escapeHtml = ( unsafe: string ): string => {
 const baseLen: number = 256;
 const isValidBase = ( base: string ): boolean => {
   return new Set( base ).size === baseLen;
+};
+
+const nameMaxLen: number = 25;
+const isValidName = ( name: string ): boolean => {
+  return name.length <= nameMaxLen;
 };
