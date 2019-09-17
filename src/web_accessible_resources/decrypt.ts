@@ -75,7 +75,7 @@ window.onload = (): void => {
                 cleanedData
               );
               if ( debabbleResult.clearText !== '' ) {
-                decryptBox.value = debabbleResult.clearText;
+                decryptBox.value = debabbleResult.clearText.replace(/(\S+\.)+\S+/g, "<a href=https://$&>$&</a>");
                 keyName.innerText = debabbleResult.keyName;
                 if ( !aside.classList.contains( 'show' ) ) {
                   aside.classList.add( 'show' );
